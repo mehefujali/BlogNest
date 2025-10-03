@@ -1,6 +1,7 @@
 import compression from "compression";
 import cors from "cors";
 import express from "express";
+import { userRoutes } from "./modules/user/user.routes";
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(
 app.get("/", (_req, res) => {
   res.send("API is running");
 });
+
+app.use("/api/v1/user", userRoutes);
 
 // 404 Handler
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
