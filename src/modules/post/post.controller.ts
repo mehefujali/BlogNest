@@ -15,8 +15,12 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getAllPost = async (req: Request, res: Response, next: NextFunction) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 5;
+  const search = req.query.search || "";
+  console.log(search);
   try {
-    const posts = await postService.getAllPost();
+    const posts = await postService.getAllPost(page, limit, search as string);
     res.status(200).json({
       success: true,
       message: "Post create success",
