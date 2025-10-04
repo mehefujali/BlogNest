@@ -20,9 +20,11 @@ const createMenyUsers = async (
 
 const getAllUser = async (
   page: number,
-  limit: number
+  limit: number,
+  search?: string
 ): Promise<Partial<User>[]> => {
   const skip = (page - 1) * limit;
+
   const users = await prisma.user.findMany({
     select: {
       id: true,
@@ -38,6 +40,16 @@ const getAllUser = async (
     take: limit,
     orderBy: {
       createdAt: "desc",
+    },
+    where: {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+      ],
     },
   });
   return users;
