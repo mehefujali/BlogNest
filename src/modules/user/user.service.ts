@@ -18,7 +18,11 @@ const createMenyUsers = async (
   return users;
 };
 
-const getAllUser = async (): Promise<Partial<User>[]> => {
+const getAllUser = async (
+  page: number,
+  limit: number
+): Promise<Partial<User>[]> => {
+  const skip = (page - 1) * limit;
   const users = await prisma.user.findMany({
     select: {
       id: true,
@@ -30,8 +34,10 @@ const getAllUser = async (): Promise<Partial<User>[]> => {
       status: true,
       Post: true,
     },
+    skip,
+    take: limit,
     orderBy: {
-      name: "asc",
+      createdAt: "desc",
     },
   });
   return users;
@@ -42,6 +48,7 @@ const getUserById = async (id: number) => {
     where: {
       id: id,
     },
+
     select: {
       id: true,
       name: true,
