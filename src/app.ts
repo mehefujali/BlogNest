@@ -2,6 +2,7 @@ import compression from "compression";
 import cors from "cors";
 import express from "express";
 import { userRoutes } from "./modules/user/user.routes";
+import { postRoutes } from "./modules/post/post.routes";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/post", postRoutes);
 
 // 404 Handler
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
