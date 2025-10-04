@@ -48,6 +48,10 @@ const getAllUser = async (
             contains: search,
             mode: "insensitive",
           },
+          email: {
+            contains: search,
+            mode: "insensitive",
+          },
         },
       ],
     },
@@ -75,9 +79,23 @@ const getUserById = async (id: number) => {
   return user;
 };
 
+const updateUser = async (
+  payload: Partial<Prisma.UserCreateInput>,
+  id: number
+) => {
+  const result = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return result;
+};
+
 export const userService = {
   createUser,
   getAllUser,
   createMenyUsers,
   getUserById,
+  updateUser,
 };
