@@ -8,11 +8,37 @@ const createUser = async (payload: Prisma.UserCreateInput): Promise<User> => {
   return user;
 };
 
-const getAllUser = async (): Promise<User[]> => {
-  const users = await prisma.user.findMany();
+const createMenyUsers = async (
+  payload: Prisma.UserCreateInput[]
+): Promise<{ count: number }> => {
+  const users = await prisma.user.createMany({
+    data: payload,
+    skipDuplicates: true,
+  });
   return users;
 };
+
+const getAllUser = async (): Promise<Partial<User>[]> => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+      picture: true,
+      role: true,
+      status: true,
+      Post: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+  return users;
+};
+
 export const userService = {
   createUser,
   getAllUser,
+  createMenyUsers,
 };

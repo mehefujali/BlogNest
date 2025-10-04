@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post("/", userController.createUser);
 router.get("/", userController.getAllUser);
+router.post("/createMany", userController.createManyUsers);
 
 export const userRoutes = router;

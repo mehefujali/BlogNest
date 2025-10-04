@@ -14,6 +14,23 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const createManyUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const response = await userService.createMenyUsers(req.body);
+    res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      data: response,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await userService.getAllUser();
@@ -30,4 +47,5 @@ const getAllUser = async (req: Request, res: Response, next: NextFunction) => {
 export const userController = {
   createUser,
   getAllUser,
+  createManyUsers,
 };
