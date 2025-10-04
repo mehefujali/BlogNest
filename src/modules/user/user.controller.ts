@@ -48,9 +48,16 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
 const getAllUser = async (req: Request, res: Response, next: NextFunction) => {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 5;
+  const search = req.query.search || "";
+
+  console.log(search);
 
   try {
-    const response = await userService.getAllUser(page, limit);
+    const response = await userService.getAllUser(
+      page,
+      limit,
+      search as string
+    );
     res.status(200).json({
       success: true,
       message: "Users fetched successfully",
