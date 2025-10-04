@@ -31,6 +31,20 @@ const createManyUsers = async (
   }
 };
 
+const getUserById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = parseInt(req.params.id);
+    const user = await userService.getUserById(id);
+    res.status(200).json({
+      success: true,
+      message: "User fetch success",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await userService.getAllUser();
@@ -48,4 +62,5 @@ export const userController = {
   createUser,
   getAllUser,
   createManyUsers,
+  getUserById,
 };
